@@ -75,7 +75,7 @@ resource "azurerm_network_security_group" "GS-AUE1-SS-NSG-002" {
  
 tags {
     environment = "Test"
-    owner = "TS"
+    owner = "BOB"
 	costCentre = "TS"
 	product = "Fund Wide"
   }
