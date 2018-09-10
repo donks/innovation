@@ -50,7 +50,13 @@ network_security_group_id 		= "${azurerm_network_security_group.GS-AUE1-SS-NSG-0
 resource_group_name 	= "${azurerm_resource_group.GS-AUE1-SS-RG-001.name}"
 virtual_network_name	="${azurerm_virtual_network.GS-AUE1-SS-VN-001.name}"
 } 
-
+resource "azurerm_subnet" "GS-AUE1-SS-SN-MGT-002" {
+name                    = "GS-AUE1-SS-SN-MGT-002"
+address_prefix          = "10.180.242.0/24"
+#network_security_group_id               = "${azurerm_network_security_group.GS-AUE1-SS-NSG-002.id}"
+resource_group_name     = "${azurerm_resource_group.GS-AUE1-SS-RG-001.name}"
+virtual_network_name    ="${azurerm_virtual_network.GS-AUE1-SS-VN-001.name}"
+}
 ##
 ## Create blank NW security groups for subnets
 ## Application security groups used to secure application flows
