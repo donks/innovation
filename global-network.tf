@@ -3,14 +3,14 @@
 ##
 
 ## Create global resource group to contain resources 
-resource "azurerm_resource_group" "GS-AUE1-SS-RG-001" {
-        name = "GS-AUE1-SS-RG-001"
+resource "azurerm_resource_group" "DEMO" {
+        name = "Demo"
         location = "australiasoutheast"
                   tags {
-                      environment = "production"
+                      environment = "demo"
                       owner = "TS"
-					  costCentre = "TS"
-					  product = "Fund_Wide"
+		      CostCentre = "TS"
+		      creator = "Terraform"
                     }
 }
 
@@ -18,72 +18,66 @@ resource "azurerm_resource_group" "GS-AUE1-SS-RG-001" {
 ## Create global services virtual network 
 ##
 
-resource "azurerm_virtual_network" "GS-AUE1-SS-VN-001" {
-  name                = "GS-AUE1-SS-VN-001"
+resource "azurerm_virtual_network" "DEMO" {
+  name                = "DEMO"
   address_space       = ["10.180.240.0/20"]
-  location            = "${azurerm_resource_group.GS-AUE1-SS-RG-001.location}"
-  resource_group_name = "${azurerm_resource_group.GS-AUE1-SS-RG-001.name}"
+  location            = "${azurerm_resource_group.DEMO.location}"
+  resource_group_name = "${azurerm_resource_group.DEMO.name}"
  
 tags {
-    environment = "Production"
+    environment = "DEMO"
     owner = "TS"
 	costCentre = "TS"
 	product = "Fund_Wide"
+	creator = "Terraform"
   }
 }
 
 ##
 ## Create Subnets
 ##
-resource "azurerm_subnet" "GS-AUE1-SS-SN-ACC-001" {
-name           		= "GS-AUE1-SS-SN-ACC-001"
+resource "azurerm_subnet" "DEMO-SN-001" {
+name           		= "DEMO-SN-001"
 address_prefix 		= "10.180.240.0/24"
-network_security_group_id 		= "${azurerm_network_security_group.GS-AUE1-SS-NSG-001.id}"
-resource_group_name 	= "${azurerm_resource_group.GS-AUE1-SS-RG-001.name}"
-virtual_network_name	="${azurerm_virtual_network.GS-AUE1-SS-VN-001.name}"
+network_security_group_id 	= "${azurerm_network_security_group.DEMO-NSG-001.id}"
+resource_group_name 	= "${azurerm_resource_group.DEMO.name}"
+virtual_network_name	="${azurerm_virtual_network.DEMO.name}"
 }
 
-resource "azurerm_subnet" "GS-AUE1-SS-SN-MGT-001" {
-name           		= "GS-AUE1-SS-SN-MGT-001"
+resource "azurerm_subnet" "DEMO-SN-002" {
+name           		= "DEMO-SN-002"
 address_prefix 		= "10.180.241.0/24"
-network_security_group_id 		= "${azurerm_network_security_group.GS-AUE1-SS-NSG-002.id}"
-resource_group_name 	= "${azurerm_resource_group.GS-AUE1-SS-RG-001.name}"
-virtual_network_name	="${azurerm_virtual_network.GS-AUE1-SS-VN-001.name}"
+network_security_group_id 		= "${azurerm_network_security_group.DEMO-NSG-002.id}"
+resource_group_name 	= "${azurerm_resource_group.DEMO.name}"
+virtual_network_name	="${azurerm_virtual_network.DEMO.name}"
 } 
-resource "azurerm_subnet" "GS-AUE1-SS-SN-MGT-002" {
-name                    = "GS-AUE1-SS-SN-MGT-002"
-address_prefix          = "10.180.242.0/24"
-#network_security_group_id               = "${azurerm_network_security_group.GS-AUE1-SS-NSG-002.id}"
-resource_group_name     = "${azurerm_resource_group.GS-AUE1-SS-RG-001.name}"
-virtual_network_name    ="${azurerm_virtual_network.GS-AUE1-SS-VN-001.name}"
-}
 ##
 ## Create blank NW security groups for subnets
 ## Application security groups used to secure application flows
 ##
-resource "azurerm_network_security_group" "GS-AUE1-SS-NSG-001" {
-  name                = "GS-AUE1-SS-NSG-001"
-  location            = "${azurerm_resource_group.GS-AUE1-SS-RG-001.location}"
-  resource_group_name = "${azurerm_resource_group.GS-AUE1-SS-RG-001.name}"
+resource "azurerm_network_security_group" "DEMO-NSG-001" {
+  name                = "DEMO-NSG-001"
+  location            = "${azurerm_resource_group.DEMO.location}"
+  resource_group_name = "${azurerm_resource_group.DEMO.name}"
  
 tags {
-    environment = "Test"
+    environment = "DEMO"
     owner = "TS"
 	costCentre = "TS"
-	product = "Fund Wide"
+	creator = "Terraform"
   }
 }
  
-resource "azurerm_network_security_group" "GS-AUE1-SS-NSG-002" {
-  name                = "GS-AUE1-SS-NSG-002"
-  location            = "${azurerm_resource_group.GS-AUE1-SS-RG-001.location}"
-  resource_group_name = "${azurerm_resource_group.GS-AUE1-SS-RG-001.name}"
+resource "azurerm_network_security_group" "DEMO-NSG-002" {
+  name                = "DEMO-NSG-002"
+  location            = "${azurerm_resource_group.DEMO.location}"
+  resource_group_name = "${azurerm_resource_group.DEMO.name}"
  
 tags {
     environment = "Test"
     owner = "BOB"
 	costCentre = "TS"
-	product = "Fund Wide"
+	creator = "Fund Wide"
   }
 }
 
