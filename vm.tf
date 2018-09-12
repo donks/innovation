@@ -11,7 +11,7 @@ resource "azurerm_virtual_machine" "main" {
   resource_group_name   = "${var.vm_rg}"
   network_interface_ids = ["${azurerm_network_interface.main.id}"]
   vm_size               = "${var.vm_size}"
-  count					= 2
+#  count					= 2
 
   # Uncomment this line to delete the OS disk automatically when deleting the VM
   delete_os_disk_on_termination = true
@@ -62,7 +62,7 @@ resource "azurerm_network_interface" "main" {
   name                = "AUE1NPDADS00${count.index}-nic"
   location              = "${var.vm_location}"
   resource_group_name   = "${var.vm_rg}"
-  count = 2 
+#  count = 2 
   
 ip_configuration {
     name                          = "configuration"
